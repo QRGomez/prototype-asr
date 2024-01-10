@@ -15,10 +15,8 @@ def ExtractAudio(video_file_path):
   audiofilename = file_name + ".mp3"
   audio.write_audiofile(audiofilename)
 
-  print(audiofilename)
 
   return audiofilename
-
 
 def convert_audio(input_path, output_path, target_sr=16000):
     # Load the audio file using librosa
@@ -62,3 +60,5 @@ def MP32Wav(input,output_dir,output_filename): #Converting .MP3 to .WAV
   os.remove(temp_wav_path)
 
   return output_filename
+
+
