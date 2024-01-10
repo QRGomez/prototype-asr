@@ -1,0 +1,10 @@
+uvicorn
+speechbrain
+torchaudio
+fastapi
+moviepy
+soundfile
+python-multipart
+python-magic
+librosa
+deta
