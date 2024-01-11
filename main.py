@@ -4,8 +4,18 @@ from speechbrain.pretrained import EncoderDecoderASR
 from fastapi import FastAPI, File, UploadFile 
 import os
 from preprocess import MP32Wav, Video2Wav
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI() #uvicorn main:app --reload (This runs starts a local instance of the API)
+
+# Allow all origins during development (replace "*" with specific origins in production)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 AUDIODIR = 'audios/' #Directory of audio uploads / extractions.
 
@@ -43,7 +53,8 @@ async def transcribe_audio(file: UploadFile = File(...)):
         # Remove the temporary file
         os.remove(temp_filepath)
         os.remove(file_path)
-        
+
+        print('YEY')
         return {"Transcription": transcripted_text}
 
     except Exception as e:
