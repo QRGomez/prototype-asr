@@ -8,5 +8,5 @@ python-multipart
 python-magic
 librosa
 deta
-cv2
+opencv-python
 numpy

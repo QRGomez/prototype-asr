@@ -80,7 +80,7 @@ async def transcribe_video(file: UploadFile = File(...)):
         # Transcribe the audio using the ASR model
         asr_model = EncoderDecoderASR.from_hparams(
             source="speechbrain/asr-crdnn-rnnlm-librispeech",
-            savedir="ASR/pretrained_models/asr-crdnn-rnnlm-librispeech",
+            savedir="pretrained_models/asr-crdnn-rnnlm-librispeech",
         )
         transcripted_text = asr_model.transcribe_file(file_path)
 
@@ -93,29 +93,7 @@ async def transcribe_video(file: UploadFile = File(...)):
     except Exception as e:
         return {"error": f"Error processing file: {str(e)}"}
 
-@app.post(f'/transcribe/image')
-async def transcribe_image(file: UploadFile = File(...)):
-    try:
-        # Save the uploaded file to the audios directory
-        file_path = file.filename
-        temp_filepath = file_path
-        
-        with open(file_path, 'wb') as file_output:
-            file_output.write(file.file.read())
-
-        transcripted_text = predict(file_path)
-
-
-        # Remove the temporary file
-        os.remove(temp_filepath)
-        os.remove(file_path)
-
-        return {"Transcription": transcripted_text}
-
-    except Exception as e:
-            return {"error": f"Error processing file: {str(e)}"}
-
-"""@app.post('/transcribe/image')
+@app.post('/transcribe/image')
 async def transcribe_image(file: UploadFile = File(...)):
     try:
         # Define a directory to save uploaded files
@@ -148,4 +126,4 @@ async def transcribe_image(file: UploadFile = File(...)):
         # Log the error for debugging purposes
         print(f"Error processing file: {str(e)}")
         # Raise an HTTPException with a 500 status code
-        raise HTTPException(status_code=500, detail="Internal Server Error")"""
+        raise HTTPException(status_code=500, detail="Internal Server Error")
